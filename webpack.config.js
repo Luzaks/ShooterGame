@@ -1,5 +1,6 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     entry: {
@@ -19,7 +20,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['env']
+                        presets: ['@babel/preset-env']
                     }
                 }
             }
@@ -36,6 +37,11 @@ module.exports = {
                 from: path.resolve(__dirname, 'index.html'),
                 to: path.resolve(__dirname, 'build')
             }
-        ])
-    ]
+        ]),
+        new webpack.DefinePlugin({
+            'typeof CANVAS_RENDERER': JSON.stringify(true),
+            'typeof WEBGL_RENDERER': JSON.stringify(true)
+        })
+    ],
+    performance: { hints: false }
 };
