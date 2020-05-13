@@ -9,7 +9,7 @@ module.exports = {
 
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: 'app.bundle.js'
+        filename: '[name].bundle.js'
     },
 
     module: {
@@ -47,5 +47,11 @@ module.exports = {
             'typeof WEBGL_RENDERER': JSON.stringify(true)
         })
     ],
-    performance: { hints: false }
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            filename: 'vendor.bundle.js'
+        },
+    },
+        performance: { hints: false }
 };
