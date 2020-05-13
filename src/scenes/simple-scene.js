@@ -1,10 +1,8 @@
 export class SimpleScene extends Phaser.Scene {
-    preload() {
-        this.load.image('cokecan', 'assets/cokecan.png');
+    constructor() {
+        super('playGame');
     }
-
-    create() {
-        this.add.text(100, 100, 'Hello Phaser!', { fill: '#0f0' });
-        this.add.image(100, 200, 'cokecan');
+    create(){
+        this.add.text(20, 20, 'Scene 2')
     }
 }

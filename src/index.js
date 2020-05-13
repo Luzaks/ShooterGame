@@ -1,11 +1,24 @@
 import 'phaser';
+import {LoaderScene} from "./scenes/LoaderScene"
+import {MainMenuScene} from"./scenes/MainMenu"
 
-import { SimpleScene } from './scenes/simple-scene';
 
-const gameConfig = {
-    width: 680,
-    height: 400,
-    scene: SimpleScene
+const config = {
+    width: 800,
+    height: 600,
+    backgroundColor: "black",
+    physics: {
+        default: "arcade",
+        arcade: {
+            gravity: { x: 0, y: 0 }
+        }
+    },
+    scene: [
+        LoaderScene,
+        MainMenuScene
+    ],
+    pixelArt: true,
+    roundPixels: true
 };
 
-new Phaser.Game(gameConfig);
+const game = new Phaser.Game(config);
