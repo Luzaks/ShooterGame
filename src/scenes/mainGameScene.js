@@ -1,4 +1,4 @@
-import {Player, CarrierShip, ChaserShip, GunShip} from '../entities/Player'
+import {Player, CarrierShip, ChaserShip, GunShip, EnemyLaser} from '../entities/Player'
 
 export class MainGameScene extends Phaser.Scene {
     constructor() {
@@ -61,6 +61,7 @@ export class MainGameScene extends Phaser.Scene {
             frameRate: 20,
             repeat: -1
         });
+        //Create sounds
         this.sfx = {
             explosions: [
                 this.sound.add("sndExplode0"),
@@ -68,38 +69,83 @@ export class MainGameScene extends Phaser.Scene {
             ],
             laser: this.sound.add("sndLaser")
         };
+
+        //Create a new instance of player protagonist
         this.player = new Player(
             this,
             this.game.config.width * 0.5,
             this.game.config.height * 0.5,
             "sprPlayer"
         );
+
+        //Add mobility
         this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
+        //load enemies
         this.enemies = this.add.group();
         this.enemyLasers = this.add.group();
         this.playerLasers = this.add.group();
 
+        //event for displaying enemies
         this.time.addEvent({
-            delay: 100,
+            delay: 1000,
             callback: function() {
-                const enemy = new GunShip(
-                    this,
-                    Phaser.Math.Between(0, this.game.config.width),
-                    0
-                );
-                this.enemies.add(enemy);
+                var enemy = null;
+
+                if (Phaser.Math.Between(0, 10) >= 3) {
+                    enemy = new GunShip(
+                        this,
+                        Phaser.Math.Between(0, this.game.config.width),
+                        0
+                    );
+                }
+                else if (Phaser.Math.Between(0, 10) >= 5) {
+                    if (this.getEnemiesByType("ChaserShip").length < 5) {
+
+                        enemy = new ChaserShip(
+                            this,
+                            Phaser.Math.Between(0, this.game.config.width),
+                            0
+                        );
+                    }
+                }
+                else {
+                    enemy = new CarrierShip(
+                        this,
+                        Phaser.Math.Between(0, this.game.config.width),
+                        0
+                    );
+                }
+
+                if (enemy !== null) {
+                    enemy.setScale(Phaser.Math.Between(10, 20) * 0.1);
+                    this.enemies.add(enemy);
+                }
             },
             callbackScope: this,
             loop: true
         });
 
     }
+
+    getEnemiesByType(type) {
+        let arr = [];
+        for (let i = 0; i < this.enemies.getChildren().length; i++) {
+            let enemy = this.enemies.getChildren()[i];
+            if (enemy.getData("type") === type) {
+                arr.push(enemy);
+            }
+        }
+        return arr;
+    }
+
     update(){
+
+        //Update player position
         this.player.update();
 
         if (this.keyW.isDown) {
@@ -114,6 +160,12 @@ export class MainGameScene extends Phaser.Scene {
         }
         else if (this.keyD.isDown) {
             this.player.moveRight();
+        }
+
+        for (let i = 0; i < this.enemies.getChildren().length; i++) {
+            let enemy = this.enemies.getChildren()[i];
+
+            enemy.update();
         }
     }
 }
