@@ -33,7 +33,7 @@ export class MainMenuScene extends Phaser.Scene {
             hoverPlayButtonMainMenu.setVisible(false);
         });
         playButtonMainMenu.on('pointerup', () => {
-
+            this.scene.start('mainGameScene');
         });
     }
 }

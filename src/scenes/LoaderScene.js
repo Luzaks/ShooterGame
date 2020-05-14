@@ -24,7 +24,7 @@ export class LoaderScene extends Phaser.Scene {
         });
 
         this.load.on('complete', () => {
-            //this.scene.start('mainGameScene');
+
         });
     }
 

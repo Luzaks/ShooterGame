@@ -1,7 +1,7 @@
 import 'phaser';
 import {LoaderScene} from "./scenes/LoaderScene"
 import {MainMenuScene} from"./scenes/MainMenu"
-
+import {MainGameScene} from "./scenes/mainGameScene";
 
 const config = {
     width: 800,
@@ -15,7 +15,8 @@ const config = {
     },
     scene: [
         LoaderScene,
-        MainMenuScene
+        MainMenuScene,
+        MainGameScene
     ],
     pixelArt: true,
     roundPixels: true
