@@ -4,11 +4,12 @@ import {MainMenuScene} from"./scenes/MainMenu"
 import {MainGameScene} from "./scenes/mainGameScene";
 
 const config = {
+    type: Phaser.canvas,
     width: 800,
     height: 600,
-    backgroundColor: "black",
+    backgroundColor: 'black',
     physics: {
-        default: "arcade",
+        default: 'arcade',
         arcade: {
             gravity: { x: 0, y: 0 }
         }

@@ -45,13 +45,6 @@ module.exports = {
         new webpack.DefinePlugin({
             'typeof CANVAS_RENDERER': JSON.stringify(true),
             'typeof WEBGL_RENDERER': JSON.stringify(true)
-        })
+        }),
     ],
-    optimization: {
-        splitChunks: {
-            chunks: 'all',
-            filename: 'vendor.bundle.js'
-        },
-    },
-        performance: { hints: false }
 };

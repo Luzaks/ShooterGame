@@ -1,4 +1,7 @@
-import {Player, CarrierShip, ChaserShip, GunShip, EnemyLaser} from '../entities/Player'
+import {Player} from '../entities/Player'
+import {ChaserShip} from "../entities/ChaserShip";
+import {GunShip} from "../entities/GunShip";
+import {CarrierShip} from "../entities/CarrierShip"
 
 export class MainGameScene extends Phaser.Scene {
     constructor() {
@@ -39,25 +42,25 @@ export class MainGameScene extends Phaser.Scene {
         this.add.text(this.game.config.width * 0.5 - 45, 20, 'Game').setDepth(1);
         this.anims.create({
             key: "sprEnemy0",
-            frames: this.anims.generateFrameNumbers("sprEnemy0"),
+            frames: this.anims.generateFrameNumbers('sprEnemy0'),
             frameRate: 20,
             repeat: -1
         });
         this.anims.create({
             key: "sprEnemy2",
-            frames: this.anims.generateFrameNumbers("sprEnemy2"),
+            frames: this.anims.generateFrameNumbers('sprEnemy2'),
             frameRate: 20,
             repeat: -1
         });
         this.anims.create({
             key: "sprExplosion",
-            frames: this.anims.generateFrameNumbers("sprExplosion"),
+            frames: this.anims.generateFrameNumbers('sprExplosion'),
             frameRate: 20,
             repeat: 0
         });
         this.anims.create({
             key: "sprPlayer",
-            frames: this.anims.generateFrameNumbers("sprPlayer"),
+            frames: this.anims.generateFrameNumbers('sprPlayer'),
             frameRate: 20,
             repeat: -1
         });
@@ -90,27 +93,46 @@ export class MainGameScene extends Phaser.Scene {
         this.enemyLasers = this.add.group();
         this.playerLasers = this.add.group();
 
+
         //event for displaying enemies
         this.time.addEvent({
             delay: 1000,
             callback: function() {
-                var enemy = null;
+                let enemy = null;
 
                 if (Phaser.Math.Between(0, 10) >= 3) {
                     enemy = new GunShip(
                         this,
                         Phaser.Math.Between(0, this.game.config.width),
                         0
-                    );
+                    );/*
+                    import('../entities/GunShip').then((gunship) => {
+
+                        const enemyCallback = gunship.GunShip;
+                        enemy = new enemyCallback(
+                            this,
+                            Phaser.Math.Between(0, this.game.config.width),
+                            0
+                        );
+                    });*/
                 }
                 else if (Phaser.Math.Between(0, 10) >= 5) {
-                    if (this.getEnemiesByType("ChaserShip").length < 5) {
-
+                    if (this.getEnemiesByType('ChaserShip').length < 5) {
                         enemy = new ChaserShip(
                             this,
                             Phaser.Math.Between(0, this.game.config.width),
                             0
                         );
+                        /*
+                        import('../entities/ChaserShip').then((gunship) => {
+
+                            const enemyCallback = gunship.ChaserShip;
+                            enemy = new enemyCallback(
+                                this,
+                                Phaser.Math.Between(0, this.game.config.width),
+                                0
+                            );
+                        });*/
                     }
                 }
                 else {
@@ -136,7 +158,7 @@ export class MainGameScene extends Phaser.Scene {
         let arr = [];
         for (let i = 0; i < this.enemies.getChildren().length; i++) {
             let enemy = this.enemies.getChildren()[i];
-            if (enemy.getData("type") === type) {
+            if (enemy.getData('type') === type) {
                 arr.push(enemy);
             }
         }
