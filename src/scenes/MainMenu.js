@@ -7,13 +7,12 @@ export class MainMenuScene extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('spaceBackground', "../assets/space1.jpg");
-        this.load.image('playButton', "../assets/sprBtnPlay.png");
-        this.load.image('hoverPlayButton', "../assets/sprBtnPlayHover.png");
+        this.load.image('spaceBackground', "./assets/space1.jpg");
+        this.load.image('playButton', "./assets/sprBtnPlay.png");
+        this.load.image('hoverPlayButton', "./assets/sprBtnPlayHover.png");
     }
 
     create(){
-        //create logo or header
         this.add.text(this.game.config.width * 0.5 - 45, 20, 'Main Menu').setDepth(1);
         //create images sprites
         this.add.image(0, 0, 'spaceBackground').setOrigin(0, 0).setDepth(0);

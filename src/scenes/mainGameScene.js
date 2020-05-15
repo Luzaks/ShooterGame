@@ -1,7 +1,7 @@
 import {Player} from '../entities/Player'
-import {ChaserShip} from "../entities/ChaserShip";
-import {GunShip} from "../entities/GunShip";
-import {CarrierShip} from "../entities/CarrierShip"
+import {ChaserShip} from '../entities/ChaserShip';
+import {GunShip} from '../entities/GunShip';
+import {CarrierShip} from '../entities/CarrierShip'
 
 export class MainGameScene extends Phaser.Scene {
     constructor() {
@@ -12,58 +12,46 @@ export class MainGameScene extends Phaser.Scene {
     }
 
     preload(){
-        this.load.spritesheet("sprExplosion", "../assets/sprExplosion.png", {
-            frameWidth: 32,
-            frameHeight: 32
-        });
-        this.load.spritesheet("sprEnemy0", "../assets/sprEnemy0.png", {
-            frameWidth: 16,
-            frameHeight: 16
-        });
-        this.load.image("sprEnemy1", "../assets/sprEnemy1.png");
-        this.load.spritesheet("sprEnemy2", "../assets/sprEnemy2.png", {
-            frameWidth: 16,
-            frameHeight: 16
-        });
-        this.load.image("sprLaserEnemy0", "../assets/sprLaserEnemy0.png");
-        this.load.image("sprLaserPlayer", "../assets/sprLaserPlayer.png");
-        this.load.spritesheet("sprPlayer", "../assets/sprPlayer.png", {
-            frameWidth: 16,
-            frameHeight: 16
-        });
+        this.load.audio('gamePlay','./assets/gamePlay.wav');
 
-        this.load.audio("sndExplode0", "../assets/sndExplode0.wav");
-        this.load.audio("sndExplode1", "../assets/sndExplode1.wav");
-        this.load.audio("sndLaser", "../assets/sndLaser.wav");
+        this.load.spritesheet('sprExplosion', './assets/explosion.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        });
+        this.load.image('sprEnemy0', './assets/laserEnemy.png');
+        this.load.image('sprEnemy1', './assets/gunEnemy.png');
+        this.load.image('sprEnemy2', "./assets/plasma2.png");
+        this.load.image('sprLaserEnemy0', './assets/lazer.png');
+        this.load.image('sprLaserPlayer', './assets/bullet.png');
+        this.load.image('sprPlayer', './assets/startShip.png');
+
+        this.load.audio('sndExplode0', './assets/sndExplode0.wav');
+        this.load.audio('sndExplode1', './assets/sndExplode1.wav');
+        this.load.audio('sndLaser', './assets/sndLaser.wav');
 
     }
 
     create(){
+
+        //Presentations
+        //Header
         this.add.text(this.game.config.width * 0.5 - 45, 20, 'Game').setDepth(1);
-        this.anims.create({
-            key: "sprEnemy0",
-            frames: this.anims.generateFrameNumbers('sprEnemy0'),
-            frameRate: 20,
-            repeat: -1
+        //Score
+
+        //Gameplay sound
+        let gameMusic = this.sound.add('gamePlay', {
+            loop: true
         });
+        gameMusic.play();
+
+        //Create sprite animations
         this.anims.create({
-            key: "sprEnemy2",
-            frames: this.anims.generateFrameNumbers('sprEnemy2'),
-            frameRate: 20,
-            repeat: -1
-        });
-        this.anims.create({
-            key: "sprExplosion",
+            key: 'sprExplosion',
             frames: this.anims.generateFrameNumbers('sprExplosion'),
             frameRate: 20,
             repeat: 0
         });
-        this.anims.create({
-            key: "sprPlayer",
-            frames: this.anims.generateFrameNumbers('sprPlayer'),
-            frameRate: 20,
-            repeat: -1
-        });
+
         //Create sounds
         this.sfx = {
             explosions: [
@@ -108,7 +96,7 @@ export class MainGameScene extends Phaser.Scene {
                     );
                 }
                 else if (Phaser.Math.Between(0, 10) >= 5) {
-                    if (this.getEnemiesByType('ChaserShip').length < 5) {
+                    if (this.getEnemiesByType("ChaserShip").length < 5) {
                         enemy = new ChaserShip(
                             this,
                             Phaser.Math.Between(0, this.game.config.width),
@@ -132,6 +120,7 @@ export class MainGameScene extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+
         //killing enemies
         this.physics.add.collider(this.playerLasers, this.enemies, function(playerLaser, enemy) {
             if (enemy) {
@@ -144,16 +133,16 @@ export class MainGameScene extends Phaser.Scene {
         });
 
         this.physics.add.overlap(this.player, this.enemies, function(player, enemy) {
-            if (!player.getData("isDead") &&
-                !enemy.getData("isDead")) {
+            if (!player.getData('isDead') &&
+                !enemy.getData('isDead')) {
                 player.explode(false);
                 enemy.explode(true);
             }
         });
-        //Dying yourself
+
         this.physics.add.overlap(this.player, this.enemyLasers, function(player, laser) {
-            if (!player.getData("isDead") &&
-                !laser.getData("isDead")) {
+            if (!player.getData('isDead') &&
+                !laser.getData('isDead')) {
                 player.explode(false);
                 laser.destroy();
             }
@@ -175,8 +164,9 @@ export class MainGameScene extends Phaser.Scene {
     update(){
 
         //Update player position
-        if (!this.player.getData("isDead")) {
+        if (!this.player.getData('isDead')) {
             this.player.update();
+
             if (this.keyW.isDown) {
                 this.player.moveUp();
             }
@@ -191,11 +181,11 @@ export class MainGameScene extends Phaser.Scene {
             }
 
             if (this.keySpace.isDown) {
-                this.player.setData("isShooting", true);
+                this.player.setData('isShooting', true);
             }
             else {
-                this.player.setData("timerShootTick", this.player.getData("timerShootDelay") - 1);
-                this.player.setData("isShooting", false);
+                this.player.setData('timerShootTick', this.player.getData("timerShootDelay") - 1);
+                this.player.setData('isShooting', false);
             }
         }
 

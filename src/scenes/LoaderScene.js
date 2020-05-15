@@ -10,7 +10,7 @@ export class LoaderScene extends Phaser.Scene {
         //change screen resolution
 
         //load image and sound
-        this.load.image('play_button', '../assets/PlayButton.png')
+        this.load.image('play_button', '../assets/PlayButton.png');
         //create loading bar
         let loadingBar = this.add.graphics({
             fillStyle: {

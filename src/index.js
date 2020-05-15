@@ -2,6 +2,7 @@ import 'phaser';
 import {LoaderScene} from "./scenes/LoaderScene"
 import {MainMenuScene} from"./scenes/MainMenu"
 import {MainGameScene} from "./scenes/mainGameScene";
+import {GameOverScene} from "./scenes/gameOver";
 
 const config = {
     type: Phaser.canvas,
@@ -17,7 +18,8 @@ const config = {
     scene: [
         LoaderScene,
         MainMenuScene,
-        MainGameScene
+        MainGameScene,
+        GameOverScene
     ],
     pixelArt: true,
     roundPixels: true
