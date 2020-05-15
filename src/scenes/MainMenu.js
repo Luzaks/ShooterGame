@@ -7,6 +7,8 @@ export class MainMenuScene extends Phaser.Scene {
     }
 
     preload(){
+        this.load.audio('mainMenuSong', './assets/the_rising_tide.mp3');
+
         this.load.image('spaceBackground', "./assets/space1.jpg");
         this.load.image('playButton', "./assets/sprBtnPlay.png");
         this.load.image('hoverPlayButton', "./assets/sprBtnPlayHover.png");
@@ -22,6 +24,11 @@ export class MainMenuScene extends Phaser.Scene {
         hoverPlayButtonMainMenu.setVisible(false);
 
         //create audio
+        this.sfx = {
+            mainMenuSong: this.sound.add("mainMenuSong")
+        };
+        let song = this.sfx.mainMenuSong;
+        song.play();
 
         //make image buttons interactive
         playButtonMainMenu.setInteractive();
@@ -32,6 +39,7 @@ export class MainMenuScene extends Phaser.Scene {
             hoverPlayButtonMainMenu.setVisible(false);
         });
         playButtonMainMenu.on('pointerup', () => {
+            song.stop();
             this.scene.start('mainGameScene');
         });
     }

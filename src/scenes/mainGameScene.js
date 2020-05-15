@@ -39,8 +39,6 @@ export class MainGameScene extends Phaser.Scene {
         //Score
 
         //Gameplay sound
-        this.song = this.sound.add('gamePlaySong', { volume: 0.1 });
-        this.song.play();
 
         //Create sprite animations
         this.anims.create({
@@ -53,11 +51,16 @@ export class MainGameScene extends Phaser.Scene {
         //Create sounds
         this.sfx = {
             explosions: [
-                this.sound.add("sndExplode0"),
-                this.sound.add("sndExplode1")
+                this.sound.add('sndExplode0'),
+                this.sound.add('sndExplode1')
             ],
-            laser: this.sound.add("sndLaser")
+            laser: this.sound.add('sndLaser'),
+            gamePlaySong: this.sound.add('gamePlaySong')
         };
+
+        let song = this.sfx.gamePlaySong;
+        song.play();
+
 
         //Create a new instance of player protagonist
         this.player = new Player(
@@ -136,6 +139,7 @@ export class MainGameScene extends Phaser.Scene {
                 player.explode(false);
                 enemy.explode(true);
                 player.onDestroy();
+                song.stop();
             }
         });
 
@@ -145,6 +149,7 @@ export class MainGameScene extends Phaser.Scene {
                 player.explode(false);
                 laser.destroy();
                 player.onDestroy();
+                song.stop();
             }
         });
 

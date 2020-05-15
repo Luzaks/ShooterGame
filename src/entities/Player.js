@@ -11,6 +11,7 @@ export class Player extends Entity {
         this.setData('timerShootTick', this.getData('timerShootDelay') - 1);
         this.setData('score', 0);
     }
+
     moveUp() {
         this.body.velocity.y = -this.getData('speed');
     }
@@ -37,6 +38,15 @@ export class Player extends Entity {
             loop: false,
         });
     }
+/*
+    score() {
+        let score = 0;
+        let scoretext;
+        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+
+        score += 10;
+        scoreText.setText('Score: ' + score);
+    }*/
 
     update(){
         //velocity
