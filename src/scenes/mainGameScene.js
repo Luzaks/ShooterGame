@@ -12,7 +12,7 @@ export class MainGameScene extends Phaser.Scene {
     }
 
     preload(){
-        this.load.audio('gamePlay','./assets/gamePlay.wav');
+        this.load.audio('gamePlaySong','./assets/gamePlay.wav');
 
         this.load.spritesheet('sprExplosion', './assets/explosion.png', {
             frameWidth: 16,
@@ -39,10 +39,8 @@ export class MainGameScene extends Phaser.Scene {
         //Score
 
         //Gameplay sound
-        let gameMusic = this.sound.add('gamePlay', {
-            loop: true
-        });
-        gameMusic.play();
+        this.song = this.sound.add('gamePlaySong', { volume: 0.1 });
+        this.song.play();
 
         //Create sprite animations
         this.anims.create({
@@ -137,6 +135,7 @@ export class MainGameScene extends Phaser.Scene {
                 !enemy.getData('isDead')) {
                 player.explode(false);
                 enemy.explode(true);
+                player.onDestroy();
             }
         });
 
@@ -145,6 +144,7 @@ export class MainGameScene extends Phaser.Scene {
                 !laser.getData('isDead')) {
                 player.explode(false);
                 laser.destroy();
+                player.onDestroy();
             }
         });
 

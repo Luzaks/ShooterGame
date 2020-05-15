@@ -9,6 +9,7 @@ export class Player extends Entity {
         this.setData('isShooting', false);
         this.setData('timerShootDelay', 10);
         this.setData('timerShootTick', this.getData('timerShootDelay') - 1);
+        this.setData('score', 0);
     }
     moveUp() {
         this.body.velocity.y = -this.getData('speed');
@@ -25,6 +26,18 @@ export class Player extends Entity {
     moveRight() {
         this.body.velocity.x = this.getData('speed');
     }
+
+    onDestroy() {
+        this.scene.time.addEvent({
+            delay: 1000,
+            callback() {
+                this.scene.scene.start('gameOver');
+            },
+            callbackScope: this,
+            loop: false,
+        });
+    }
+
     update(){
         //velocity
         this.body.setVelocity(0, 0);
