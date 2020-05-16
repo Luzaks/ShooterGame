@@ -1,4 +1,5 @@
 import {Entity} from "./Entities";
+import * as storage from "../ScoreSystem/storedScores"
 
 export class Player extends Entity {
     constructor(scene, x, y, key) {
@@ -10,6 +11,7 @@ export class Player extends Entity {
         this.setData('timerShootDelay', 10);
         this.setData('timerShootTick', this.getData('timerShootDelay') - 1);
         this.setData('score', 0);
+        this.setData('lives', 3);
     }
 
     moveUp() {
@@ -38,15 +40,15 @@ export class Player extends Entity {
             loop: false,
         });
     }
-/*
-    score() {
-        let score = 0;
-        let scoretext;
-        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
-        score += 10;
-        scoreText.setText('Score: ' + score);
-    }*/
+    playerScore(enemyRank) {
+        let scoreText;
+        scoreText = this.scene.add.text(16, 16, 'Score: ', { fontSize: '32px', fill: '#fff' }).setDepth(2);
+        if (!this.getData('isDead')){
+            this.setData('score', parseInt(this.getData('score')) + parseInt(enemyRank));
+        }
+        scoreText.setText(`Score: ${this.getData('score')}`)
+    }
 
     update(){
         //velocity

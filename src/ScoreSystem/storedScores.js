@@ -1,6 +1,5 @@
 function localStoreScore(score) {
-    const scr = JSON.stringify(score);
-    localStorage.setItem('scores', scr);
+    localStorage.setItem('scores', JSON.stringify(score));
 }
 
 function getLocalScores() {

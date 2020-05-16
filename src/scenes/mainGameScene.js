@@ -12,7 +12,7 @@ export class MainGameScene extends Phaser.Scene {
     }
 
     preload(){
-        this.load.audio('gamePlaySong','./assets/gamePlay.wav');
+        this.load.audio('gamePlaySong','./assets/the_fallen.mp3');
 
         this.load.spritesheet('sprExplosion', './assets/explosion.png', {
             frameWidth: 16,
@@ -67,8 +67,9 @@ export class MainGameScene extends Phaser.Scene {
             this,
             this.game.config.width * 0.5,
             this.game.config.height * 0.5,
-            "sprPlayer"
+            'sprPlayer'
         );
+        const playerNew = this.player;
 
         //Add mobility
         this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -128,6 +129,7 @@ export class MainGameScene extends Phaser.Scene {
                 if (enemy.onDestroy !== undefined) {
                     enemy.onDestroy();
                 }
+                console.log(playerNew.playerScore(`${enemy.getData('enemyRank')}`));
                 enemy.explode(true);
                 playerLaser.destroy();
             }
@@ -138,6 +140,7 @@ export class MainGameScene extends Phaser.Scene {
                 !enemy.getData('isDead')) {
                 player.explode(false);
                 enemy.explode(true);
+                console.log(playerNew.playerScore(`${enemy.getData('enemyRank')}`));
                 player.onDestroy();
                 song.stop();
             }

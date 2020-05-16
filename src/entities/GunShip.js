@@ -1,10 +1,11 @@
 import {Entity} from "./Entities";
-import {EnemyLaser} from "./Player";
+import {EnemyLaser} from './Player';
 
 export class GunShip extends Entity {
     constructor(scene, x, y) {
-        super(scene, x, y, "sprEnemy0", "GunShip");
-        this.play("sprEnemy0");
+        super(scene, x, y, 'sprEnemy0', 'GunShip');
+        this.play('sprEnemy0');
+        this.setData('enemyRank', 30);
         this.body.velocity.y = Phaser.Math.Between(50, 100);
 
         //event for shooting
