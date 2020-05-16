@@ -26,6 +26,7 @@ export class MainMenuScene extends Phaser.Scene {
             mainMenuSong: this.sound.add('mainMenuSong')
         };
         let song = this.sfx.mainMenuSong;
+        song.pauseOnBlur = false;
         song.play();
 
         playButtonMainMenu.setInteractive();

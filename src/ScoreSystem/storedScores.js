@@ -1,22 +1,31 @@
-function localStoreScore(score) {
-    localStorage.setItem('scores', JSON.stringify(score));
-}
+let scoresContainer = JSON.parse(localStorage.getItem('scores'));
 
-function getLocalScores() {
-    const score = localStorage.getItem('scores');
-    let result = JSON.parse(score);
-    if (result === null) {
-        result = [0, 0];
-        localStoreScore(result);
+const localStoreScore = (score) => {
+    localStorage.setItem('scores',JSON.stringify(score));
+};
+
+const pushingScoresContainer = () => {
+    if (scoresContainer === null) {
+        scoresContainer = [0];
+        localStoreScore(scoresContainer);
     }
-    return result;
-}
+    return scoresContainer;
+};
 
-function storeScores(score) {
-    const localScore = getLocalScores();
-    localScore[0] = score;
-    localScore[1] = Math.max(...localScore);
+const storeScores = (score) => {
+    const localScore = pushingScoresContainer();
+    if (score > localScore[0]){
+        localScore[0] = score;
+    }
     localStoreScore(localScore);
-}
+};
 
-export { localStoreScore, getLocalScores, storeScores };
+const getMaxScore = () => {
+    return Math.max(...scoresContainer);
+};
+
+const getCurrentScore = (playerScore) => {
+    return playerScore;
+};
+
+export { localStoreScore, pushingScoresContainer, storeScores, getMaxScore, getCurrentScore };

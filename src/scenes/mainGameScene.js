@@ -2,6 +2,7 @@ import {Player} from '../entities/Player'
 import {ChaserShip} from '../entities/ChaserShip';
 import {GunShip} from '../entities/GunShip';
 import {CarrierShip} from '../entities/CarrierShip'
+import * as storage from "../ScoreSystem/storedScores"
 
 export class MainGameScene extends Phaser.Scene {
     constructor() {
@@ -59,6 +60,7 @@ export class MainGameScene extends Phaser.Scene {
         };
 
         let song = this.sfx.gamePlaySong;
+        song.pauseOnBlur = false;
         song.play();
 
 
@@ -129,7 +131,7 @@ export class MainGameScene extends Phaser.Scene {
                 if (enemy.onDestroy !== undefined) {
                     enemy.onDestroy();
                 }
-                console.log(playerNew.playerScore(`${enemy.getData('enemyRank')}`));
+                playerNew.playerScore(`${enemy.getData('enemyRank')}`);
                 enemy.explode(true);
                 playerLaser.destroy();
             }
@@ -140,8 +142,8 @@ export class MainGameScene extends Phaser.Scene {
                 !enemy.getData('isDead')) {
                 player.explode(false);
                 enemy.explode(true);
-                console.log(playerNew.playerScore(`${enemy.getData('enemyRank')}`));
                 player.onDestroy();
+                storage.storeScores(player.getData('score'));
                 song.stop();
             }
         });
@@ -152,6 +154,7 @@ export class MainGameScene extends Phaser.Scene {
                 player.explode(false);
                 laser.destroy();
                 player.onDestroy();
+                storage.storeScores(player.getData('score'));
                 song.stop();
             }
         });

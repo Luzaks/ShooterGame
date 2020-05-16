@@ -15,6 +15,7 @@ export class GameOverScene extends Phaser.Scene {
         this.title.setOrigin(0.5, 0.8);
 
         this.music = this.sound.add('gameOver');
+        this.music.pauseOnBlur = false;
         this.music.play();
     }
 

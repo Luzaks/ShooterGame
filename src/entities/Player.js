@@ -1,5 +1,4 @@
 import {Entity} from "./Entities";
-import * as storage from "../ScoreSystem/storedScores"
 
 export class Player extends Entity {
     constructor(scene, x, y, key) {
@@ -47,6 +46,7 @@ export class Player extends Entity {
         if (!this.getData('isDead')){
             this.setData('score', parseInt(this.getData('score')) + parseInt(enemyRank));
         }
+        //storage.storeScores(this.getData('score'));
         scoreText.setText(`Score: ${this.getData('score')}`)
     }
 
