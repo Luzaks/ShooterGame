@@ -1,14 +1,14 @@
 import {Player} from '../entities/Player'
 import {ChaserShip} from '../entities/ChaserShip';
 import {GunShip} from '../entities/GunShip';
-import {CarrierShip} from '../entities/CarrierShip'
-import * as storage from "../ScoreSystem/storedScores"
+import {CarrierShip} from '../entities/CarrierShip';
+import * as storage from '../ScoreSystem/storedScores';
+import * as leaderBoardData from '../ScoreSystem/scoreAPI';
 
 export class MainGameScene extends Phaser.Scene {
     constructor() {
         super('mainGameScene')
     }
-
     init(){
     }
 
@@ -145,6 +145,8 @@ export class MainGameScene extends Phaser.Scene {
                 player.onDestroy();
                 storage.storeScores(player.getData('score'));
                 song.stop();
+                //leaderBoardData.submitHighScore('Lain', storage.getMaxScore()).then(r => {return r});
+                //leaderBoardData.getScoreBoard().then(r => {return r});
             }
         });
 
@@ -156,6 +158,8 @@ export class MainGameScene extends Phaser.Scene {
                 player.onDestroy();
                 storage.storeScores(player.getData('score'));
                 song.stop();
+                //leaderBoardData.submitHighScore('Lain', storage.getMaxScore()).then(r => {return r});
+                //leaderBoardData.getScoreBoard().then(r => {return r});
             }
         });
 

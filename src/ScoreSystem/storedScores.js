@@ -21,7 +21,7 @@ const storeScores = (score) => {
 };
 
 const getMaxScore = () => {
-    return Math.max(...scoresContainer);
+    return scoresContainer[0];
 };
 
 const getCurrentScore = (playerScore) => {
