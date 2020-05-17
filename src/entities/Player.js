@@ -41,13 +41,13 @@ export class Player extends Entity {
     }
 
     playerScore(enemyRank) {
-        let scoreText;
-        scoreText = this.scene.add.text(16, 16, 'Score: ', { fontSize: '32px', fill: '#fff' }).setDepth(2);
+        //let scoreText, scoreValue;
+        //this.scene.add.text(16, 16, 'Score: ', {fontSize: '32px', fill: '#fff'}).setDepth(2);
         if (!this.getData('isDead')){
             this.setData('score', parseInt(this.getData('score')) + parseInt(enemyRank));
         }
         //storage.storeScores(this.getData('score'));
-        scoreText.setText(`Score: ${this.getData('score')}`)
+        this.scene.add.text(16, 20, this.getData('score'), {fontSize: '32px', fill: '#fff'}).setDepth(2);
     }
 
     update(){

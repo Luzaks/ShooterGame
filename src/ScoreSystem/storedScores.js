@@ -28,4 +28,9 @@ const getCurrentScore = (playerScore) => {
     return playerScore;
 };
 
-export { localStoreScore, pushingScoresContainer, storeScores, getMaxScore, getCurrentScore };
+export {
+    localStoreScore,
+    pushingScoresContainer,
+    storeScores,
+    getMaxScore,
+    getCurrentScore };

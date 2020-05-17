@@ -22,10 +22,15 @@ async function obtainScores() {
     const APIActions = { method: 'GET', headers: { Accept: 'application/json',  'Content-Type': 'application/json' }};
     const submittedPromise = await fetch(url, APIActions);
     const resultObject = await submittedPromise.json();
-    const objectEntries = Object.entries(resultObject.result);
 
-    console.log(objectEntries[0]);
-    /*return await submittedPromise.json();*/
+    let sortedList = [];
+    sortedList = Object.entries(resultObject.result).sort((a ,b) => {
+        if (b[1].score > a[1].score) return 1;
+            else if (b[1].score < a[1].score) return -1;
+                else return 0;
+
+    });
+    return sortedList.map(el => el[1]).slice(0, resultObject.result.length);
 }
 
 export {
