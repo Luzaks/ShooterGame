@@ -1,5 +1,7 @@
 import * as storage from '../ScoreSystem/storedScores';
 import * as leaderBoardData from '../scoreSystem/scoreAPI';
+import {ScrollingBackground} from "./scrollingBackground";
+import {submitHighScore} from "../ScoreSystem/scoreAPI";
 
 export class GameOverScene extends Phaser.Scene {
     constructor() {
@@ -7,34 +9,109 @@ export class GameOverScene extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('sprBg0', './assets/gamePlay/try2.png');
+        this.load.image('submitBtnPlain', './assets/buttons/btnSubmitPlain.png');
+        this.load.image('submitBtnHover', './assets/buttons/btnSubmitHover.png');
+        this.load.image('gameOverTittle', './assets/gameOver/titleGameOver.png');
+        this.load.image('retryBtnPlain', './assets/buttons/btnRetryPlain.png');
+        this.load.image('retryBtnHover', './assets/buttons/btnRetryHover.png');
+        this.load.image('rankBtnPlain', './assets/buttons/btnRankingPlain.png');
+        this.load.image('rankBtnHover', './assets/buttons/btnRankingHover.png');
+
         this.load.audio('gameOver', './assets/no_hope.wav');
-        this.load.image('submitBtn', './assets/sprBtnRestart.png')
+        this.load.audio('buttonsPressed', './assets/buttons/press.wav');
     }
 
     create() {
-        this.title = this.add.text(this.game.config.width * 0.5, 128, 'You are dead!', {
-            align: 'center',
+
+        this.backgrounds = [];
+        for (let i = 0; i < 5; i++) {
+            let bg = new ScrollingBackground(this, 'sprBg0', i * 10);
+            this.backgrounds.push(bg);
+        }
+
+        this.add.image(267, 16, 'gameOverTittle').setOrigin(0, 0).setDepth(0);
+
+
+        this.music = this.sound.add('gameOver', {
+            loop: true
         });
-
-        this.title.setOrigin(0.5, 0.8);
-
-        this.music = this.sound.add('gameOver');
         this.music.pauseOnBlur = false;
         this.music.play();
 
-        let submitButton = this.add.image(this.game.config.width * 0.5 - 64, this.game.config.height * 0.5, 'submitBtn').setOrigin(0, 0);
+        this.pressed = this.sound.add( 'buttonsPressed');
+
+        const yourScoreStyle = 'font: 28px Calibri; font-weight: 900; color: white';
+        this.add.dom(365, 109, 'h2', `${yourScoreStyle}`, `Score: ${storage.getCurrentScore()}`).setOrigin(0, 0).setDepth(1);
+
+        const inputDoomDiv = document.createElement('div');
+        inputDoomDiv.innerHTML = `
+            <input type="text" id="inputName" placeholder="Type your name to submit" style="width: 300px;  height: 30px; margin-bottom: 30px; padding: 3px; text-align: center; border: 1px darkcyan solid; font: 20px Calibri; font-weight: 900; background-color: transparent; color: darkcyan"><br>
+         `;
+        const inputEventContainerStyle = 'text-align: center';
+        this.add.dom(250, 220, inputDoomDiv, `${inputEventContainerStyle}`).setOrigin(0, 0);
+
+        let submitButton = this.add.image( 293, 340, 'submitBtnPlain').setOrigin(0, 0);
+        let submitButtonHover = this.add.image( 293, 340, 'submitBtnHover').setOrigin(0, 0);
+        submitButtonHover.setVisible(false);
+
+        let retryButton = this.add.image( 95, 440, 'retryBtnPlain').setOrigin(0, 0);
+        let retryButtonHover = this.add.image( 95, 440, 'retryBtnHover').setOrigin(0, 0);
+        retryButtonHover.setVisible(false);
+
+        let rankButton = this.add.image( 495, 440, 'rankBtnPlain').setOrigin(0, 0);
+        let rankButtonHover = this.add.image( 495, 440, 'rankBtnHover').setOrigin(0, 0);
+        rankButtonHover.setVisible(false);
+
         submitButton.setInteractive();
         submitButton.on('pointerup', () => {
-            /*let submitYourScore = leaderBoardData.submitHighScore('Lain', storage.getMaxScore()).then((r) => {return r}).then((r) => {return r});*/
-            let getScores = leaderBoardData.obtainScores().then((r) => {return r}).then((r) => {return r});
-            console.log(getScores);
+            const inputNameValue = document.getElementById('inputName').value;
+            const currentScore = storage.getCurrentScore();
+
+            if (inputNameValue !== '' && currentScore > 0) {
+                leaderBoardData.submitHighScore(inputNameValue, currentScore).then(r => {return r}).then(r =>{return r});
+                this.music.play();
+                this.scene.start('leaderBoardScene');
+            } else if (inputNameValue === '') {
+                alert('Input name empty');
+            } else if (currentScore <= 0) {
+                alert('Your score has to be bigger than zero to be processed, try again.')
+            }
         });
 
         submitButton.on('pointerover', () => {
-           console.log('Hi am over retry button');
+            submitButtonHover.setVisible(true);
+            this.pressed.play();
+        });
+
+        submitButton.on('pointerout', () => {
+            submitButtonHover.setVisible(false);
+        });
+
+        retryButton.setInteractive();
+        retryButton.on('pointerup', () =>{
+            this.scene.start('mainGameScene');
+        }) ;
+        retryButton.on('pointerover', () =>{
+            retryButtonHover.setVisible(true);
+            this.pressed.play();
+        });
+        retryButton.on('pointerout', () =>{
+            retryButtonHover.setVisible(false);
+        });
+
+        rankButton.setInteractive();
+        rankButton.on('pointerup', () =>{
+            this.scene.start('leaderBoardScene');
+        }) ;
+        rankButton.on('pointerover', () =>{
+            rankButtonHover.setVisible(true);
+            this.pressed.play();
+        });
+        rankButton.on('pointerout', () =>{
+            rankButtonHover.setVisible(false);
         });
     }
-
     update() {
     }
 }

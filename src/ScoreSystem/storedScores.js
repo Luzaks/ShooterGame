@@ -1,12 +1,12 @@
 let scoresContainer = JSON.parse(localStorage.getItem('scores'));
 
-const localStoreScore = (score) => {
-    localStorage.setItem('scores',JSON.stringify(score));
+const localStoreScore = (scores) => {
+    localStorage.setItem('scores',JSON.stringify(scores));
 };
 
 const pushingScoresContainer = () => {
     if (scoresContainer === null) {
-        scoresContainer = [0];
+        scoresContainer = [0 , 0];
         localStoreScore(scoresContainer);
     }
     return scoresContainer;
@@ -17,15 +17,24 @@ const storeScores = (score) => {
     if (score > localScore[0]){
         localScore[0] = score;
     }
+    localScore[1] = score;
     localStoreScore(localScore);
 };
 
 const getMaxScore = () => {
-    return scoresContainer[0];
+    if (scoresContainer === null){
+        return 0;
+    } else {
+        return scoresContainer[0];
+    }
 };
 
 const getCurrentScore = (playerScore) => {
-    return playerScore;
+    if (scoresContainer === null){
+        return 0;
+    } else {
+        return scoresContainer[1];
+    }
 };
 
 export {

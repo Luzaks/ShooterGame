@@ -51,7 +51,7 @@ export class MainGameScene extends Phaser.Scene {
         this.add.dom(584, 16, 'h2', `${scoreBoardStyle}`, `HIGHEST SCORE: ${storage.getMaxScore()}`).setOrigin(0, 0).setDepth(1);
 
         this.backgrounds = [];
-        for (let i = 0; i < 5; i++) { // create five scrolling backgrounds
+        for (let i = 0; i < 5; i++) {
             let bg = new ScrollingBackground(this, 'sprBg0', i * 10);
             this.backgrounds.push(bg);
         }
@@ -69,15 +69,13 @@ export class MainGameScene extends Phaser.Scene {
                 this.sound.add('sndExplode1')
             ],
             laser: this.sound.add('sndLaser'),
-            gamePlaySong: this.sound.add('gamePlaySong'),
+            gamePlaySong: this.sound.add('gamePlaySong', {loop: true}),
             collisionSound: this.sound.add('collisionSound')
         };
 
         let song = this.sfx.gamePlaySong;
         song.pauseOnBlur = false;
-        song.play('', {
-            loop: true
-        });
+        song.play();
 
         let collisionSound = this.sfx.collisionSound;
 
@@ -119,7 +117,7 @@ export class MainGameScene extends Phaser.Scene {
                     );
                 }
                 else if (Phaser.Math.Between(0, 10) >= 5) {
-                    if (this.getEnemiesByType("ChaserShip").length < 5) {
+                    if (this.getEnemiesByType('ChaserShip').length < 5) {
                         enemy = new InterStellarShip(
                             this,
                             Phaser.Math.Between(0, this.game.config.width),
@@ -147,7 +145,6 @@ export class MainGameScene extends Phaser.Scene {
                     secondEnemy.setScale(Phaser.Math.Between(10, 20) * 0.1);
                     this.enemies.add(secondEnemy);
                 }
-
             },
             callbackScope: this,
             loop: true
@@ -194,6 +191,7 @@ export class MainGameScene extends Phaser.Scene {
                 song.stop();
             }
             storage.storeScores(player.getData('score'));
+            storage.getCurrentScore(player.getData('score'));
         });
 
     }

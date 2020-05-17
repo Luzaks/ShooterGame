@@ -22,10 +22,10 @@ const config = {
         /*LoaderScene,
         MainMenuScene,
         IntroScene,
-        CommandsScene,*/
-        MainGameScene,
-        /*GameOverScene,
-        LeaderBoardScene*/
+        CommandsScene,
+        MainGameScene,*/
+        GameOverScene,
+        LeaderBoardScene
     ],
     pixelArt: true,
     roundPixels: true,

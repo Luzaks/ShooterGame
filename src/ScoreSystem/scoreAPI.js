@@ -11,16 +11,18 @@ const gameID = 'ciW36ZWmdZPUzR8AWueK';
 const url = `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${gameID}/scores/`;
 
 async function submitHighScore(userName, scoreValue) {
-    const scoreObjectValues = { user: userName, score: scoreValue};
+    const scoreObjectValues = { user: userName, score: parseInt(scoreValue)};
     const postBody = JSON.stringify(scoreObjectValues);
     const APIActions = { method: 'POST', headers: { Accept: 'application/json', 'Content-Type': 'application/json' }, body: postBody };
-    const submittedPromise = await fetch(url, APIActions);
+    const submittedPromise = await fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/ciW36ZWmdZPUzR8AWueK/scores/',
+        APIActions);
     return await submittedPromise.json();
 }
 
 async function obtainScores() {
     const APIActions = { method: 'GET', headers: { Accept: 'application/json',  'Content-Type': 'application/json' }};
-    const submittedPromise = await fetch(url, APIActions);
+    const submittedPromise = await fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/ciW36ZWmdZPUzR8AWueK/scores/',
+        APIActions);
     const resultObject = await submittedPromise.json();
 
     let sortedList = [];
