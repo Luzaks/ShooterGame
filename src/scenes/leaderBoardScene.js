@@ -4,7 +4,7 @@ import {obtainScores} from "../ScoreSystem/scoreAPI";
  export class LeaderBoardScene extends Phaser.Scene {
      constructor() {
          super({
-             key: 'examples'
+             key: 'leaderBoardScene'
          })
      }
 
@@ -36,7 +36,6 @@ import {obtainScores} from "../ScoreSystem/scoreAPI";
              this.add.dom(350, 370, 'div', 'text-align: center; font: 20px Arial; color: white', `${r[4].user}`).setOrigin(0,0);
              this.add.dom(550, 370, 'div', 'text-align: center; font: 20px Arial; color: white', `${r[4].score}`).setOrigin(0,0);
          });
-
      }
      update()  {
      }

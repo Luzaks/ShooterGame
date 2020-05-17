@@ -4,6 +4,8 @@ import {MainMenuScene} from"./scenes/MainMenu"
 import {MainGameScene} from "./scenes/mainGameScene";
 import {GameOverScene} from "./scenes/gameOver";
 import {LeaderBoardScene} from "./scenes/leaderBoardScene";
+import{IntroScene} from "./scenes/introScene"
+import {CommandsScene} from "./scenes/commandsScene";
 
 const config = {
     type: Phaser.canvas,
@@ -17,10 +19,12 @@ const config = {
         }
     },
     scene: [
-        /*LoaderScene,
+        LoaderScene,
         MainMenuScene,
+        IntroScene,
+        CommandsScene,
         MainGameScene,
-        GameOverScene*/
+        GameOverScene,
         LeaderBoardScene
     ],
     pixelArt: true,
