@@ -9,7 +9,7 @@ import {obtainScores} from "../ScoreSystem/scoreAPI";
      }
 
      preload() {
-         this.load.image('spaceBackground', './assets/leaderBoard/MP8glav.png');
+         this.load.image('highBack', './assets/leaderBoard/MP8glav.png');
          this.load.image('retryBtnHover', './assets/buttons/btnRetryHover.png');
          this.load.image('retryBtnPlain', './assets/buttons/btnRetryPlain.png');
 
@@ -20,12 +20,13 @@ import {obtainScores} from "../ScoreSystem/scoreAPI";
 
      create() {
 
-         this.add.image(0, 0, 'spaceBackground').setOrigin(0, 0);
+         this.add.image(0, 0, 'highBack').setOrigin(0, 0);
          this.music = this.sound.add('highScore');
+         this.music.play();
          this.pressed = this.sound.add( 'buttonsPressed');
 
          obtainScores().then(r => {return r}).then((r) => {
-             this.add.dom(40, 100, 'div', 'text-align: center; font: 35px Calibri; color: white', 'Highest Scores').setOrigin(0,0);
+             this.add.dom(40, 100, 'div', 'text-align: center; font: 35px Calibri; color: white', 'Best aerospacial engineers').setOrigin(0,0);
              this.add.dom(150, 170, 'div', 'text-align: center; font: 20px Calibri; color: white', '1').setOrigin(0,0);
              this.add.dom(350, 170, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[0].user}`).setOrigin(0,0);
              this.add.dom(550, 170, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[0].score}`).setOrigin(0,0);

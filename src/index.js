@@ -19,11 +19,11 @@ const config = {
         }
     },
     scene: [
-        /*LoaderScene,
+        LoaderScene,
         MainMenuScene,
         IntroScene,
         CommandsScene,
-        MainGameScene,*/
+        MainGameScene,
         GameOverScene,
         LeaderBoardScene
     ],
