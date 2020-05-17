@@ -70,12 +70,12 @@ export class GameOverScene extends Phaser.Scene {
 
             if (inputNameValue !== '' && currentScore > 0) {
                 leaderBoardData.submitHighScore(inputNameValue, currentScore).then(r => {return r}).then(r =>{return r});
-                this.music.play();
+                this.music.stop();
                 this.scene.start('leaderBoardScene');
             } else if (inputNameValue === '') {
                 alert('Input name empty');
             } else if (currentScore <= 0) {
-                alert('Your score has to be bigger than zero to be processed, try again.')
+                alert('Your score has to be bigger than zero to be processed, play again.')
             }
         });
 
@@ -90,6 +90,7 @@ export class GameOverScene extends Phaser.Scene {
 
         retryButton.setInteractive();
         retryButton.on('pointerup', () =>{
+            this.music.stop();
             this.scene.start('mainGameScene');
         }) ;
         retryButton.on('pointerover', () =>{
@@ -102,6 +103,7 @@ export class GameOverScene extends Phaser.Scene {
 
         rankButton.setInteractive();
         rankButton.on('pointerup', () =>{
+            this.music.stop();
             this.scene.start('leaderBoardScene');
         }) ;
         rankButton.on('pointerover', () =>{
