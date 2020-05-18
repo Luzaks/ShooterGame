@@ -11,8 +11,10 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@babel/core": "7.0.0",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
     "babel-core": "6",
+    "babel-jest": "^26.0.1",
     "babel-loader": "^8.1.0",
     "babel-preset-env": "^1.7.0",
     "copy-webpack-plugin": "^5.1.1",

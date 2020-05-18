@@ -10,10 +10,13 @@ import {obtainScores} from "../ScoreSystem/scoreAPI";
 
      preload() {
          this.load.image('highBack', './assets/leaderBoard/MP8glav.png');
+         this.load.image('menuHighButton', './assets/buttons/btnMenuPlain.png');
+         this.load.image('menuHighButtonHover', './assets/buttons/btnMenuHover.png');
          this.load.image('retryBtnHover', './assets/buttons/btnRetryHover.png');
          this.load.image('retryBtnPlain', './assets/buttons/btnRetryPlain.png');
 
-         this.load.audio('buttonsPressed', './assets/buttons/press.wav');
+         this.load.audio('buttonSound', './assets/buttons/buttonEffect.wav');
+         this.load.audio('buttonPressed', './assets/buttons/press.wav');
          this.load.audio('highScore', './assets//leaderBoard/Hi-Score.ogg');
 
      }
@@ -23,7 +26,8 @@ import {obtainScores} from "../ScoreSystem/scoreAPI";
          this.add.image(0, 0, 'highBack').setOrigin(0, 0);
          this.music = this.sound.add('highScore');
          this.music.play();
-         this.pressed = this.sound.add( 'buttonsPressed');
+         this.hovering = this.sound.add('buttonSound');
+         this.press = this.sound.add( 'buttonPressed');
 
          obtainScores().then(r => {return r}).then((r) => {
              this.add.dom(40, 100, 'div', 'text-align: center; font: 35px Calibri; color: white', 'Best aerospacial engineers').setOrigin(0,0);
@@ -44,17 +48,35 @@ import {obtainScores} from "../ScoreSystem/scoreAPI";
              this.add.dom(550, 370, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[4].score}`).setOrigin(0,0);
          });
 
-         let retryButton = this.add.image( 336, 440, 'retryBtnPlain').setOrigin(0, 0);
-         let retryButtonHover = this.add.image( 336, 438, 'retryBtnHover').setOrigin(0, 0);
+         let menuBtnCommand = this.add.image(95, 460, 'menuHighButton').setOrigin(0, 0);
+         let hoverMenuBtnCommand = this.add.image(95, 460, 'menuHighButtonHover').setOrigin(0, 0);
+         hoverMenuBtnCommand.setVisible(false);
+
+         let retryButton = this.add.image( 495, 460, 'retryBtnPlain').setOrigin(0, 0);
+         let retryButtonHover = this.add.image( 495, 460, 'retryBtnHover').setOrigin(0, 0);
          retryButtonHover.setVisible(false);
+
+         menuBtnCommand.setInteractive();
+         menuBtnCommand.on('pointerup', () =>{
+             this.press.play();
+             this.scene.start('MainMenu');
+         }) ;
+         menuBtnCommand.on('pointerover', () =>{
+             hoverMenuBtnCommand.setVisible(true);
+             this.hovering.play();
+         });
+         menuBtnCommand.on('pointerout', () =>{
+             hoverMenuBtnCommand.setVisible(false);
+         });
 
          retryButton.setInteractive();
          retryButton.on('pointerup', () =>{
+             this.press.play();
              this.scene.start('mainGameScene');
          }) ;
          retryButton.on('pointerover', () =>{
              retryButtonHover.setVisible(true);
-             this.pressed.play();
+             this.hovering.play();
          });
          retryButton.on('pointerout', () =>{
              retryButtonHover.setVisible(false);
