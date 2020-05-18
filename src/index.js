@@ -19,13 +19,13 @@ const config = {
         }
     },
     scene: [
-        LoaderScene,
+        /*LoaderScene,
         MainMenuScene,
         IntroScene,
-        CommandsScene,
+        CommandsScene,*/
         MainGameScene,
-        GameOverScene,
-        LeaderBoardScene
+        /*GameOverScene,
+        LeaderBoardScene*/
     ],
     pixelArt: true,
     roundPixels: true,

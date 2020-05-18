@@ -2,8 +2,8 @@ import {Entity} from "./Entities";
 
 export class CarrierShip extends Entity {
     constructor(scene, x, y) {
-        super(scene, x, y, "sprEnemy2", "CarrierShip");
-        this.play("sprEnemy2");
+        super(scene, x, y, 'sprEnemy2', 'CarrierShip');
+        this.play('sprEnemy2');
         this.setData('enemyRank', 10);
         this.body.velocity.y = Phaser.Math.Between(50, 100);
         this.states = {

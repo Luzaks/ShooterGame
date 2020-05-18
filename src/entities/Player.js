@@ -41,13 +41,20 @@ export class Player extends Entity {
     }
 
     playerScore(enemyRank) {
-        //let scoreText, scoreValue;
-        //this.scene.add.text(16, 16, 'Score: ', {fontSize: '32px', fill: '#fff'}).setDepth(2);
         if (!this.getData('isDead')){
             this.setData('score', parseInt(this.getData('score')) + parseInt(enemyRank));
         }
         //storage.storeScores(this.getData('score'));
-        this.scene.add.text(16, 20, this.getData('score'), {fontSize: '32px', fill: '#fff'}).setDepth(2);
+    }
+
+    playerLives(lives) {
+        let livesSet = parseInt(lives);
+        if (livesSet > 1) {
+            this.setData('lives', livesSet - 1);
+        } else {
+            this.explode(false);
+            this.onDestroy()
+        }
     }
 
     update(){

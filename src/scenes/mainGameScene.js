@@ -6,6 +6,7 @@ import * as storage from '../ScoreSystem/storedScores';
 import * as leaderBoardData from '../ScoreSystem/scoreAPI';
 
 export class MainGameScene extends Phaser.Scene {
+
     constructor() {
         super('mainGameScene')
     }
@@ -13,7 +14,11 @@ export class MainGameScene extends Phaser.Scene {
     }
 
     preload(){
+        this.load.plugin('rexlifetimeplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexlifetimeplugin.min.js', true);
+
         this.load.audio('gamePlaySong','./assets/the_fallen.mp3');
+        this.load.audio('collisionSound','./assets/gamePlay/FX091.wav');
+
 
         this.load.spritesheet('sprExplosion', './assets/explosion.png', {
             frameWidth: 16,
@@ -33,15 +38,11 @@ export class MainGameScene extends Phaser.Scene {
     }
 
     create(){
+        const scoreBoardStyle = 'font: 16px Calibri; font-weight: 900; color: white';
+        const scoreBoard = this.add.dom(16, 16, 'h2', `${scoreBoardStyle}`, 'SCORE: 0').setOrigin(0, 0).setDepth(1);
 
-        //Presentations
-        //Header
-        this.add.text(this.game.config.width * 0.5 - 45, 20, 'Game').setDepth(1);
-        //Score
+        this.add.dom(584, 16, 'h2', `${scoreBoardStyle}`, `HIGHEST SCORE: ${storage.getMaxScore()}`).setOrigin(0, 0).setDepth(1);
 
-        //Gameplay sound
-
-        //Create sprite animations
         this.anims.create({
             key: 'sprExplosion',
             frames: this.anims.generateFrameNumbers('sprExplosion'),
@@ -49,22 +50,22 @@ export class MainGameScene extends Phaser.Scene {
             repeat: 0
         });
 
-        //Create sounds
         this.sfx = {
             explosions: [
                 this.sound.add('sndExplode0'),
                 this.sound.add('sndExplode1')
             ],
             laser: this.sound.add('sndLaser'),
-            gamePlaySong: this.sound.add('gamePlaySong')
+            gamePlaySong: this.sound.add('gamePlaySong'),
+            collisionSound: this.sound.add('collisionSound')
         };
 
         let song = this.sfx.gamePlaySong;
         song.pauseOnBlur = false;
         song.play();
 
+        let collisionSound = this.sfx.collisionSound;
 
-        //Create a new instance of player protagonist
         this.player = new Player(
             this,
             this.game.config.width * 0.5,
@@ -72,6 +73,9 @@ export class MainGameScene extends Phaser.Scene {
             'sprPlayer'
         );
         const playerNew = this.player;
+        const livesBoard = this.add.dom(325, 16, 'h2', `${scoreBoardStyle}`, `LIVES: ${playerNew.getData('lives')}`).setOrigin(0, 0).setDepth(1);
+
+        //this.life = this.add.image(20, 20, 'sprEnemy0').setScale(0.5, 0.5);
 
         //Add mobility
         this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -126,12 +130,13 @@ export class MainGameScene extends Phaser.Scene {
         });
 
         //killing enemies
-        this.physics.add.collider(this.playerLasers, this.enemies, function(playerLaser, enemy) {
+         this.physics.add.collider(this.playerLasers, this.enemies, function(playerLaser, enemy) {
             if (enemy) {
                 if (enemy.onDestroy !== undefined) {
                     enemy.onDestroy();
                 }
                 playerNew.playerScore(`${enemy.getData('enemyRank')}`);
+                scoreBoard.setText(`SCORE: ${playerNew.getData('score')}`);
                 enemy.explode(true);
                 playerLaser.destroy();
             }
@@ -153,14 +158,19 @@ export class MainGameScene extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.enemyLasers, function(player, laser) {
             if (!player.getData('isDead') &&
                 !laser.getData('isDead')) {
-                player.explode(false);
+                if (player.getData('lives') >= 1){
+                    collisionSound.play();
+                }
                 laser.destroy();
-                player.onDestroy();
-                storage.storeScores(player.getData('score'));
-                song.stop();
+                playerNew.playerLives(`${player.getData('lives')}`);
+                livesBoard.setText(`LIVES: ${playerNew.getData('lives')}`);
                 //leaderBoardData.submitHighScore('Lain', storage.getMaxScore()).then(r => {return r});
                 //leaderBoardData.getScoreBoard().then(r => {return r});
+                if (player.getData('lives') <= 1) {
+                    song.stop();
+                }
             }
+            storage.storeScores(player.getData('score'));
         });
 
     }
