@@ -24,24 +24,24 @@ const storeScores = (score) => {
 const getMaxScore = () => {
   if (scoresContainer === null) {
     return 0;
-  } else {
-    return scoresContainer[0];
   }
+  return scoresContainer[0];
 };
 
-const getCurrentScore = (playerScore) => {
+const getCurrentScore = () => {
   if (scoresContainer === null) {
     return 0;
-  } else {
-    return scoresContainer[1];
   }
+  return scoresContainer[1];
 };
 
+const scoresContainerFunction = () => scoresContainer;
+
 export {
-  scoresContainer,
+  scoresContainerFunction,
   localStoreScore,
   pushingScoresContainer,
   storeScores,
   getMaxScore,
-  getCurrentScore
+  getCurrentScore,
 };
