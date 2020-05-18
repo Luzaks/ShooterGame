@@ -1,7 +1,7 @@
 import {Entity} from "./Entities";
 import {EnemyLaser} from './Player';
 
-export class GunShip extends Entity {
+export class AttackShip extends Entity {
     constructor(scene, x, y) {
         super(scene, x, y, 'sprEnemy0', 'GunShip');
         this.play('sprEnemy0');

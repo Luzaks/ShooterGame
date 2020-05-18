@@ -1,6 +1,6 @@
 import {Entity} from "./Entities";
 
-export class CarrierShip extends Entity {
+export class Gravity extends Entity {
     constructor(scene, x, y) {
         super(scene, x, y, 'sprEnemy2', 'CarrierShip');
         this.play('sprEnemy2');

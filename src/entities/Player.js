@@ -94,3 +94,10 @@ export class EnemyLaser extends Entity {
         this.body.velocity.y = 200;
     }
 }
+
+export class EnemyPlasma extends Entity {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'sprLaserEnemy1');
+        this.body.velocity.y = 150;
+    }
+}

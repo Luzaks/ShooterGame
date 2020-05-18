@@ -8,7 +8,7 @@ export class MainMenuScene extends Phaser.Scene {
 
     preload(){
 
-        this.load.audio('mainMenuSong', './assets/the_rising_tide.mp3');
+        this.load.audio('mainMenuSong', './assets/mainMenu/the_rising_tide.mp3');
         this.load.audio('buttonSound', './assets/buttons/buttonEffect.wav');
         this.load.audio('buttonPressed', './assets/buttons/press.wav');
 
