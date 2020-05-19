@@ -7,8 +7,9 @@ async function newGame() {
   // eslint-disable-next-line no-return-await
   return await submittedPromise.json();
 }
-// eslint-disable-next-line radix
+
 async function submitHighScore(userName, scoreValue) {
+  // eslint-disable-next-line radix
   const scoreObjectValues = { user: userName, score: parseInt(scoreValue) };
   const postBody = JSON.stringify(scoreObjectValues);
   const APIActions = { method: 'POST', headers: { Accept: 'application/json', 'Content-Type': 'application/json' }, body: postBody };

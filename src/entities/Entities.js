@@ -23,7 +23,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
       }
       this.setAngle(0);
       this.body.setVelocity(0, 0);
-      this.on('animationcomplete',() => {
+      this.on('animationcomplete', () => {
         if (canDestroy) {
           this.destroy();
         } else {
