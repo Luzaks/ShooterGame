@@ -76,7 +76,7 @@ and for shooting you press space bar.
 
 <div align="center"><img src="assets/commandsScene/space.png"></div>
 
-##Getting Started
+## Getting Started
 
 Clone the repo in your computer.
 
@@ -88,7 +88,7 @@ yarn webpack-dev-server
 ```
 After all open on your browser :
 [http://localhost:8080/](http://localhost:8080/)
-and enjoy play.
+and enjoy playing.
 
 ### Built With
 
