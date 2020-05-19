@@ -1,3 +1,5 @@
+import '@babel/polyfill'
+
 async function newGame() {
     const gameName = { name: 'Adhara Space' };
     const postBody = JSON.stringify(gameName);
@@ -6,10 +8,10 @@ async function newGame() {
     const submittedPromise = await fetch(url, APIActions);
     return await submittedPromise.json()
 }
-
+/*
 const gameID = 'ciW36ZWmdZPUzR8AWueK';
 const url = `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${gameID}/scores/`;
-
+*/
 async function submitHighScore(userName, scoreValue) {
     const scoreObjectValues = { user: userName, score: parseInt(scoreValue)};
     const postBody = JSON.stringify(scoreObjectValues);
