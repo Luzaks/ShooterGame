@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 import * as storage from '../ScoreSystem/storedScores';
-import * as leaderBoardData from '../scoreSystem/scoreAPI';
+import { submitHighScore } from '../ScoreSystem/scoreAPI';
 import ScrollingBackground from './scrollingBackground';
 
 export default class GameOverScene extends Phaser.Scene {
@@ -69,7 +69,7 @@ export default class GameOverScene extends Phaser.Scene {
       const currentScore = storage.getCurrentScore();
 
       if (inputNameValue !== '' && currentScore > 0) {
-        leaderBoardData.submitHighScore(inputNameValue, currentScore).then(r => r).then(r => r);
+        submitHighScore(inputNameValue, currentScore).then(r => r).then(r => r);
         this.music.stop();
         this.scene.start('leaderBoardScene');
       } else if (inputNameValue === '') {
