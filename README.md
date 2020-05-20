@@ -80,11 +80,11 @@ and for shooting you press space bar.
 
 Clone the repo in your computer.
 
-Run:
+In you favorite bash run:
 ```bash
-yarn install
-yarn webpack
-yarn webpack-dev-server
+yarn install  //Install all dependencies
+yarn run pack  //Bundle modules and assets
+yarn run dev  //Run the local server
 ```
 After all open on your browser :
 [http://localhost:8080/](http://localhost:8080/)
@@ -96,10 +96,12 @@ and enjoy playing.
 * Phaser 3
 * Yarn Package Manager
 * Webpack
+* Babel
 * Jest
 * LocalStorage
 * Git / Github
 * Adobe Illustrator
+* WebStorm
 * [Leaderboard API service](https://www.notion.so/Leaderboard-API-service-24c0c3c116974ac49488d4eb0267ade3)
 * [Netlify](https://www.netlify.com/)
 

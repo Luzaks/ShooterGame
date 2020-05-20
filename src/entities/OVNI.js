@@ -10,7 +10,6 @@ export default class OVNI extends Entity {
     this.setData('enemyRank', 10);
     this.body.velocity.y = Phaser.Math.Between(50, 100);
 
-    // event for shooting
     this.shootTimer = this.scene.time.addEvent({
       delay: 1000,
       callback() {

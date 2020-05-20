@@ -63,21 +63,25 @@ export default class GameOverScene extends Phaser.Scene {
     const rankButtonHover = this.add.image(495, 440, 'rankBtnHover').setOrigin(0, 0);
     rankButtonHover.setVisible(false);
 
+    const inputError = this.add.dom(350, 300, 'div', 'padding: 3px 7px; border: 1px solid red; border-radius: 20px; font: 15px Calibri; color: red', 'Input name empty').setOrigin(0, 0);
+    inputError.setVisible(false);
+
+    const scoreError = this.add.dom(250, 270, 'div', 'padding: 3px 7px; border: 1px solid red; border-radius: 20px; font: 15px Calibri; color: red', 'Your score has to be bigger than zero to be processed, play again.').setOrigin(0, 0);
+    scoreError.setVisible(false);
+
     submitButton.setInteractive();
     submitButton.on('pointerup', () => {
       const inputNameValue = document.getElementById('inputName').value;
       const currentScore = storage.getCurrentScore();
 
       if (inputNameValue !== '' && currentScore > 0) {
-        submitHighScore(inputNameValue, currentScore).then(r => r).then(r => r);
+        submitHighScore(inputNameValue, currentScore);
         this.music.stop();
         this.scene.start('leaderBoardScene');
       } else if (inputNameValue === '') {
-        // eslint-disable-next-line no-alert
-        alert('Input name empty');
+        inputError.setVisible(true);
       } else if (currentScore <= 0) {
-        // eslint-disable-next-line no-alert
-        alert('Your score has to be bigger than zero to be processed, play again.');
+        inputError.setVisible(true);
       }
     });
 

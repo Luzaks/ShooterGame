@@ -1,7 +1,8 @@
-/* eslint-disable no-undef */
-
+// eslint-disable-next-line import/no-extraneous-dependencies
+import '@babel/polyfill';
 import { obtainScores } from '../ScoreSystem/scoreAPI';
 
+// eslint-disable-next-line no-undef
 export default class LeaderBoardScene extends Phaser.Scene {
   constructor() {
     super({
@@ -28,23 +29,17 @@ export default class LeaderBoardScene extends Phaser.Scene {
     this.hovering = this.sound.add('buttonSound');
     this.press = this.sound.add('buttonPressed');
 
-    obtainScores().then(r => r).then((r) => {
-      this.add.dom(40, 100, 'div', 'text-align: center; font: 35px Calibri; color: white', 'Best aerospacial engineers').setOrigin(0, 0);
-      this.add.dom(150, 170, 'div', 'text-align: center; font: 20px Calibri; color: white', '1').setOrigin(0, 0);
-      this.add.dom(350, 170, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[0].user}`).setOrigin(0, 0);
-      this.add.dom(550, 170, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[0].score}`).setOrigin(0, 0);
-      this.add.dom(150, 220, 'div', 'text-align: center; font: 20px Calibri; color: white', '2').setOrigin(0, 0);
-      this.add.dom(350, 220, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[1].user}`).setOrigin(0, 0);
-      this.add.dom(550, 220, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[1].score}`).setOrigin(0, 0);
-      this.add.dom(150, 270, 'div', 'text-align: center; font: 20px Calibri; color: white', '3').setOrigin(0, 0);
-      this.add.dom(350, 270, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[2].user}`).setOrigin(0, 0);
-      this.add.dom(550, 270, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[2].score}`).setOrigin(0, 0);
-      this.add.dom(150, 320, 'div', 'text-align: center; font: 20px Calibri; color: white', '4').setOrigin(0, 0);
-      this.add.dom(350, 320, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[3].user}`).setOrigin(0, 0);
-      this.add.dom(550, 320, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[3].score}`).setOrigin(0, 0);
-      this.add.dom(150, 370, 'div', 'text-align: center; font: 20px Calibri; color: white', '5').setOrigin(0, 0);
-      this.add.dom(350, 370, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[4].user}`).setOrigin(0, 0);
-      this.add.dom(550, 370, 'div', 'text-align: center; font: 20px Calibri; color: white', `${r[4].score}`).setOrigin(0, 0);
+    obtainScores().then((r) => {
+      this.add.dom(125, 60, 'div', 'text-align: center; font: 35px Calibri; color: white', 'Best aerospacial engineers').setOrigin(0, 0);
+
+      const DataStyle = 'font: 23px Calibri; color: white; width: 250px; height: 40px; font-weight: 700;';
+      let j = 170;
+
+      for (let i = 0; i < 5; i += 1) {
+        this.add.dom(125, j, 'div', `${DataStyle}`, `${i + 1}.-  ${r[i][1].user}  ${r[i][1].score}`).setOrigin(0, 0);
+        this.add.dom(525, j, 'div', `${DataStyle}`, `${i + 6}.-  ${r[i + 5][1].user}  ${r[i + 5][1].score}`).setOrigin(0, 0);
+        j += 40;
+      }
     });
 
     const menuBtnCommand = this.add.image(95, 460, 'menuHighButton').setOrigin(0, 0);
@@ -82,5 +77,3 @@ export default class LeaderBoardScene extends Phaser.Scene {
     });
   }
 }
-
-/* eslint-enable no-undef */

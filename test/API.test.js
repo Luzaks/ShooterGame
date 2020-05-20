@@ -18,4 +18,10 @@ describe('It test the API request system.', () => {
       .then(r => { expect(r[1].user).toBe('Brandy'); })
       .then(r => r).catch(() => 'Error');
   });
+
+  test('the obtain GET action using an async function.', () => {
+    apiRequest.obtainScores()
+      .then(r => { expect(r[0].user).toBe(600); })
+      .then(r => r).catch(() => 'Error');
+  });
 });

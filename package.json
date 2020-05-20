@@ -24,6 +24,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "dev": "webpack-dev-server --mode development",
+    "prod": "webpack-dev-server --mode production",
+    "pack": "webpack",
     "test": "jest"
   },
   "devDependencies": {
